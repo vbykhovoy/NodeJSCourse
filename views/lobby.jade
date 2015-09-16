@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .block-panel(ng-app='lobby', ng-controller='lobbyController')
+    -if(user)
+      h3 Welcome #{user.name}!
+      a.link(href='/logout') (Logout)
+    .row
+      .col-lg-12
+        .input-group
+          span.input-group-btn
+            button.btn.btn-default(type='button', ng-click='createRoom(roomName)', ng-disabled='!roomName') Create room
+          input.form-control(type='text', ng-model='roomName', placeholder='Enter the room name')
+    h1 Available rooms
+    .list-group
+      a.list-group-item(ng-href='/room/{{item._id}}', ng-repeat='item in rooms | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:createdDate:true') {{item.roomName}}
+
+    button.btn.btn-default(ng-disabled='currentPage == 0', ng-click='currentPage=currentPage-1') Previous
+    |  {{currentPage+1}}/{{pages()}}
+    button.btn.btn-default(ng-disabled='currentPage >= rooms.length/pageSize - 1', ng-click='currentPage=currentPage+1') Next
+
+block scripts
+  script(src='/javascripts/lobby.min.js')
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+{
+  "name": "bower.json",
+  "version": "0.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angularjs": "~1.4.3",
+    "jquery": "~2.1.4",
+    "jquery-ui": "~1.11.4",
+    "bootstrap": "~3.3.5"
+  }
+}

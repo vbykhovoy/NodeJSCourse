@@ -1,0 +1,5 @@
+{
+  "mongoose": {
+    "connectionString": "mongodb://mbp-vitaly.vrn.dataart.net:27017/chatdb"
+  }
+}

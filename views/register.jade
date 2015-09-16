@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  form(method='post', action='/register').block-panel
+    h3.block-panel-heading Register new account
+      input.form-control.credentials(type='text', name='name', placeholder='User Name', required='', autofocus='')
+      input.form-control.credentials(type='text', name='email', placeholder='Email address', required='')
+      input.form-control.credentials(type='password', name='password' placeholder='Password', required='')
+      button.btn.btn-lg.btn-primary.btn-block(type='submit') Register
