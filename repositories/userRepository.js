@@ -1,49 +1,48 @@
 'use strict'
 
 var User = require('../models/user');
-var Q = require('q');
+var Promise = require('bluebird');
 
 module.exports = {
     getUser: function(id) {
-        var promise = Q(User.findById(id, function(err, user) {
-            if (err) {
-                throw err;
-            }
+        return new Promise(function(resolve, reject)  {
+            User.findById(id, function(err, user) {
+                if (err) {
+                    reject(err);
+                }
 
-            return user;
-        }));
-
-        return promise;
+                resolve(user);
+            })
+        });
     },
 
     getUserByEmail: function(email){
-        var promise = Q(User.findOne({ 'email' :  email }, function(err, user) {
-            if (err) {
-                throw err;
-            }
+        return new Promise(function(resolve, reject)  {
+            User.findOne({ 'email' :  email }, function(err, user) {
+                if (err) {
+                    reject(err);
+                }
 
-            return user;
-        }));
-
-        return promise;
+                resolve(user);
+            });
+        });
     },
 
     createUser: function(name, email, password){
-        var newUser = new User();
-        newUser.email = email;
-        newUser.name = name;
-        newUser.password = newUser.generateHash(password);
+        return new Promise(function(resolve, reject) {
+            var newUser = new User();
+            newUser.email = email;
+            newUser.name = name;
+            newUser.password = newUser.generateHash(password);
 
-        var promise = Q(newUser.save(function(err) {
-            if (err) {
-                throw err;
-            }
+            newUser.save(function(err) {
+                if (err) {
+                    reject(err);
+                }
 
-            return newUser;
-        }));
-
-        return promise;
-
+                resolve(newUser);
+            });
+        });
     }
 
 };

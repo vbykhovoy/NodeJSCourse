@@ -18,7 +18,7 @@ module.exports = function(passport) {
             .then(function(user){
                 done(null, user);
             })
-            .fail(function(err){
+            .catch(function(err){
                 done(err, null);
             });
     });
@@ -31,14 +31,14 @@ module.exports = function(passport) {
         },
         function(req, email, password, done) {
             // find a user whose email is the same as the forms email
-            // we are checking to see if the user trying to login already exists
+            // I am checking to see if the user trying to login already exists
             userRepository.getUserByEmail(email)
-                .fail(function(err){
+                .catch(function(err){
                     winston.log('error', err.message)
                     return done(err);
                 })
                 .then(function(user){
-                    if (user) {
+                    if (user) { // user already exists
                         return done(null, false);
                     } else {
                         // if there is no user with that email
@@ -47,8 +47,8 @@ module.exports = function(passport) {
                             .then(function(user){
                                 return done(null, user);
                             })
-                            .fail(function(err){
-                                winston.log('error', err.message)
+                            .catch(function(err){
+                                winston.log('error', err.message);
                                 return done(err);
                             });
                     }
@@ -66,18 +66,19 @@ module.exports = function(passport) {
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
             userRepository.getUserByEmail(email)
-                .fail(function(){
+                .catch(function(err){
                     winston.log('error', err.message)
                     return done(err);
                 })
                 .then(function(user){
-                    if (!user)
+                    if (!user) // if user not found
                         return done(null, false, req.flash('message', 'No user found.'));
 
                     // if the user is found but the password is wrong
                     if (!user.validPassword(password))
                         return done(null, false, req.flash('message', 'Wrong password.'));
 
+                    // if user checked remember me box
                     if (req.body.remember) {
                         req.session.cookie.maxAge = 24 * 1000 * 60 * 60;
                     }

@@ -10,10 +10,10 @@ block content
         .input-group
           span.input-group-btn
             button.btn.btn-default(type='button', ng-click='createRoom(roomName)', ng-disabled='!roomName') Create room
-          input.form-control(type='text', ng-model='roomName', placeholder='Enter the room name')
+          input.form-control(type='text', ng-model='roomName', placeholder='Enter the room name',on-enter='createRoom(roomName)')
     h1 Available rooms
     .list-group
-      a.list-group-item(ng-href='/room/{{item._id}}', ng-repeat='item in rooms | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:createdDate:true') {{item.roomName}}
+      a.list-group-item(ng-href='/room/{{item._id}}', ng-repeat='item in rooms | startFrom:currentPage*pageSize | limitTo:pageSize') {{item.roomName}}
 
     button.btn.btn-default(ng-disabled='currentPage == 0', ng-click='currentPage=currentPage-1') Previous
     |  {{currentPage+1}}/{{pages()}}

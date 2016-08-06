@@ -16,9 +16,6 @@ var app = express();
 
 config.file({'file': '../config.json'});
 
-if (process.env.NODE_ENV && process.env.NODE_ENV === "production"){
-  winston.remove(winston.transports.Console);
-}
 winston.add(winston.transports.File, { filename: 'logs.log', maxsize: 1048576, zippedArchive: true });
 
 mongoose.connect(config.get('mongoose:connectionString'));
@@ -32,7 +29,6 @@ db.on('error', function (err) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

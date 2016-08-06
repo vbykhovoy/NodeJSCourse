@@ -2,7 +2,6 @@
 
 var messageRepository = require('../repositories/messageRepository');
 var winston = require('winston');
-var Q = require('q');
 
 module.exports = function(io) {
     io.on('connection', function(socket){
@@ -14,7 +13,7 @@ module.exports = function(io) {
         });
 
         socket.on('image', function (data) {
-            console.log('----scockets' + data.image);
+            console.log('----sockets' + data.image);
             processMessage(data)
                 .then(function(message){
                     io.emit('message', message);
@@ -24,19 +23,17 @@ module.exports = function(io) {
 };
 
 function processMessage(data){
-    var deferred = Q.defer();
     messageRepository.createMessage(data.userId, data.roomId, data.message, data.image)
         .then(function (message) {
             var user = message.user.toObject();
-            delete user.email;
-            delete user.password;
+            delete user.email; // delete email info from view model
+            delete user.password; // delete password info from view model
             message.user = user;
-            deferred.resolve(message);
+
+            return message;
         })
-        .fail(function (err) {
+        .catch(function (err) {
             winston.log('error', err.message)
         });
-
-    return deferred.promise;
 }
 

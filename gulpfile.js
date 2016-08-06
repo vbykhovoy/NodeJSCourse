@@ -24,5 +24,4 @@ gulp.task('compress', function() {
 
 
 gulp.task('default', ['copy', 'compress'], function() {
-    // place code for your default task here
 });

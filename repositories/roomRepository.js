@@ -1,45 +1,48 @@
 'use strict'
 
 var Room = require('../models/room');
-var Q = require('q');
+var Promise = require('bluebird');
+var _ = require('lodash');
 
 module.exports = {
     getRoom: function(id) {
-        var promise = Q(Room.findById(id, function (err, room) {
-            if (err) {
-                throw err;
-            }
+        return new Promise(function(resolve, reject)  {
+            Room.findById(id, function (err, room) {
+                if (err) {
+                    reject(err);
+                }
 
-            return room;
-        }));
-
-        return promise;
+                resolve(room);
+            });
+        });
     },
 
     getRooms: function(){
-        var promise = Q(Room.find(function (err, rooms) {
-            if (err) {
-                throw err;
-            }
+        return new Promise(function(resolve, reject)  {
+            Room.find(function (err, rooms) {
+                if (err) {
+                    reject(err);
+                }
 
-            return rooms;
-        }));
-
-        return promise;
+                resolve(_.orderBy(rooms, ['createdDate'], ['desc']));
+            });
+        });
     },
 
     saveRoom: function(name){
-        var newRoom = new Room({
-            roomName: name,
-            createdDate: new Date()
+        return new Promise(function(resolve, reject)  {
+            var newRoom = new Room({
+                roomName: name,
+                createdDate: new Date()
+            });
+
+            newRoom.save(function (err) {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve();
+            });
         });
-
-        var promise = Q(newRoom.save(function (err) {
-            if (err) {
-                throw err;
-            }
-        }));
-
-        return promise;
     }
 };

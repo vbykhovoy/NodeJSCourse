@@ -8,7 +8,7 @@ app.controller('lobbyController', ['$scope', 'lobbyService', function($scope, lo
     $scope.currentPage = 0;
     $scope.pageSize = 10;
     $scope.pages=function(){
-        if (!$scope.rooms) return 0;
+        if (!$scope.rooms || $scope.rooms.length == 0) return 1;
         return Math.ceil($scope.rooms.length/$scope.pageSize);
     };
 
