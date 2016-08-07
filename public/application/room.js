@@ -1,6 +1,6 @@
 'use strict'
 
-var app = angular.module("room", []);
+var app = angular.module("room", ['luegg.directives']);
 
 app.controller('roomController', ['$scope', 'roomService', function($scope, roomService){
     $scope.roomId = document.getElementById('roomId').value; // using 'document.getElementById' because angular cannot read the value from hidden fields
@@ -12,27 +12,24 @@ app.controller('roomController', ['$scope', 'roomService', function($scope, room
     });
 
     var socket = io();
+    var image = null;
 
     socket.on('message', function(data){
         updateImages(data);
     });
 
-    socket.on('image', function(data){
-        updateImages(data);
-    });
-
     $scope.sendMessage = function() {
-        var data = {roomId: $scope.roomId, userId: $scope.userId, message: $scope.messageText, image: null};
+        var data = {roomId: $scope.roomId, userId: $scope.userId, message: $scope.messageText, image: image};
         socket.emit('message', data);
         $scope.messageText = '';
+        image = null;
     };
 
     $scope.uploadFile = function (event) {
         var data = event.target.files[0];
         var reader = new FileReader();
         reader.onload = function(evt) {
-            var params = {roomId: $scope.roomId, userId: $scope.userId, message: null, image: evt.target.result};
-            socket.emit('image', params);
+            image = evt.target.result;
         };
         reader.readAsDataURL(data);
     };
@@ -71,22 +68,6 @@ app.directive('onEnter',function(){
         link:linkFn
     };
 });
-
-app.directive('schrollBottom', function () {
-    return {
-        scope: {
-            schrollBottom: "="
-        },
-        link: function (scope, element) {
-            scope.$watchCollection('schrollBottom', function (newValue) {
-                if (newValue)
-                {
-                    $(element).scrollTop($(element)[0].scrollHeight);
-                }
-            });
-        }
-    }
-})
 
 app.directive('fileOnChange', function() {
     return {

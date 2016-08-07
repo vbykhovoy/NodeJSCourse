@@ -5,32 +5,39 @@ var Promise = require('bluebird');
 var _ = require('lodash');
 
 module.exports = {
-    createMessage: function(userId, roomId, message, image) {
+    createMessage: function(userId, roomId, content, image) {
+        var that = this;
         return new Promise(function(resolve, reject)  {
                 var message = new Message({
                     user: userId,
                     room: roomId,
-                    content: message,
+                    content: content,
                     image: image,
                     createdDate: new Date()
                 });
 
-                var id = message.save(function (err) {
+                message.save(function (err) {
                     if (err) {
                         reject(err);
                     }
 
-                    return message._id;
-                });
-
-                Message.findById(id).populate('user').populate('room').exec(function (err, message) {
-                    if (err) {
-                        reject(err);
-                    }
-
-                    resolve(message);
+                    that.getFullMessageById(message._id).then(function(result){
+                        resolve(result);
+                    });
                 });
             });
+    },
+
+    getFullMessageById: function (messageId) {
+        return new Promise(function(resolve, reject) {
+            Message.findById(messageId).populate('user').populate('room').exec(function (err, message) {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve(message);
+            });
+        });
     },
 
     getMessagesByRoomId: function(roomId){
@@ -40,7 +47,7 @@ module.exports = {
                     reject(err);
                 }
 
-                resolve(_.orderBy(messages, ['createdDate'], ['desc']));
+                resolve(_.orderBy(messages, ['createdDate'], ['asc']));
             })
         });
     }

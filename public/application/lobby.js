@@ -20,7 +20,7 @@ app.controller('lobbyController', ['$scope', 'lobbyService', function($scope, lo
         });
     };
 
-    socket.on('update-rooms', function(data){
+    socket.on('update-rooms', function(){
         initList();
     });
 

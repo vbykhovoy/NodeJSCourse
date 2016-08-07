@@ -25,3 +25,5 @@ bin/logs.log
 public/javascripts/lobby.js
 
 public/javascripts/room.js
+
+public/javascripts/scrollglue.js
