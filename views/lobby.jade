@@ -10,7 +10,7 @@ block content
         .input-group
           span.input-group-btn
             button.btn.btn-default(type='button', ng-click='createRoom(roomName)', ng-disabled='!roomName') Create room
-          input.form-control(type='text', ng-model='roomName', placeholder='Enter the room name',on-enter='createRoom(roomName)')
+          input.form-control(type='text', ng-model='roomName', placeholder='Enter the room name')
     h1 Available rooms
     .list-group
       a.list-group-item(ng-href='/room/{{item._id}}', ng-repeat='item in rooms | startFrom:currentPage*pageSize | limitTo:pageSize') {{item.roomName}}
@@ -20,6 +20,7 @@ block content
     button.btn.btn-default(ng-disabled='currentPage >= rooms.length/pageSize - 1', ng-click='currentPage=currentPage+1') Next
 
 block scripts
+  script(src='https://cdn.socket.io/socket.io-1.3.5.js')
   script(src='/javascripts/lobby.min.js')
 
 

@@ -67,7 +67,7 @@ module.exports = function(passport) {
             // we are checking to see if the user trying to login already exists
             userRepository.getUserByEmail(email)
                 .catch(function(err){
-                    winston.log('error', err.message)
+                    winston.log('error', err.message);
                     return done(err);
                 })
                 .then(function(user){

@@ -7,7 +7,7 @@ var _ = require('lodash');
 module.exports = {
     getRoom: function(id) {
         return new Promise(function(resolve, reject)  {
-            Room.findById(id, function (err, room) {
+            Room.findOne({'_id': id}, function (err, room) {
                 if (err) {
                     reject(err);
                 }

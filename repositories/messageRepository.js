@@ -2,6 +2,7 @@
 
 var Message = require('../models/message');
 var Promise = require('bluebird');
+var _ = require('lodash');
 
 module.exports = {
     createMessage: function(userId, roomId, message, image) {
@@ -39,7 +40,7 @@ module.exports = {
                     reject(err);
                 }
 
-                resolve(messages);
+                resolve(_.orderBy(messages, ['createdDate'], ['desc']));
             })
         });
     }

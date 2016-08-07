@@ -18,8 +18,8 @@ module.exports = {
 
     getUserByEmail: function(email){
         return new Promise(function(resolve, reject)  {
-            User.findOne({ 'email' :  email }, function(err, user) {
-                if (err) {
+            User.findOne({'email': email}, function (err, user) {
+                if (err){
                     reject(err);
                 }
 

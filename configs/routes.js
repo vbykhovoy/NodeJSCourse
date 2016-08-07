@@ -11,18 +11,6 @@ module.exports = function(app, passport) {
         res.render('lobby', { title: 'Home', user: req.user });
     });
 
-    // room page route
-    app.get('/room/:id', isLoggedIn, function(req, res){
-        roomRepository.getRoom(req.params.id)
-            .then(function(result){
-                var room = result[0];
-                res.render('room', { title: room.roomName, room: room, user: req.user });
-            })
-            .catch(function(err){
-                returnServerError(res, err);
-            });
-    });
-
     // login page route
     app.get('/login', function(req, res) {
         res.render('login', { title: 'Login' });
@@ -52,6 +40,17 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
 
+    // room page route
+    app.get('/room/:id', isLoggedIn, function(req, res){
+        roomRepository.getRoom(req.params.id)
+            .then(function(room){
+                res.render('room', { title: room.roomName, room: room, user: req.user });
+            })
+            .catch(function(err){
+                returnServerError(res, err);
+            });
+    });
+
 
     // API routes
 
@@ -62,7 +61,7 @@ module.exports = function(app, passport) {
     app.post('/api/rooms', isApiLoggedIn, function(req, res) {
         roomRepository.saveRoom(req.body.name)
             .then(function(){
-                getRooms(req, res);
+                res.send();
             })
             .catch(function(err){
                 returnServerError(res, err);
@@ -105,7 +104,6 @@ function returnServerError(res, err){
 }
 
 function isLoggedIn(req, res, next) {
-
     // if user is authenticated in the session
     if (req.isAuthenticated()) {
         return next();

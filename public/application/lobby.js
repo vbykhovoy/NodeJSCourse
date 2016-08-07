@@ -3,6 +3,7 @@
 var app = angular.module("lobby", []);
 
 app.controller('lobbyController', ['$scope', 'lobbyService', function($scope, lobbyService){
+    var socket = io();
     initList();
 
     $scope.currentPage = 0;
@@ -13,11 +14,15 @@ app.controller('lobbyController', ['$scope', 'lobbyService', function($scope, lo
     };
 
     $scope.createRoom = function(roomName){
-        lobbyService.createRoom(roomName).success(function (data){
-            $scope.rooms = data;
+        lobbyService.createRoom(roomName).success(function (){
             $scope.roomName = '';
+            socket.emit('update-rooms');
         });
-    }
+    };
+
+    socket.on('update-rooms', function(data){
+        initList();
+    });
 
     function initList(){
         lobbyService.getRooms().success(function(data){

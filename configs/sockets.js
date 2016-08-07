@@ -6,18 +6,17 @@ var winston = require('winston');
 module.exports = function(io) {
     io.on('connection', function(socket){
         socket.on('message', function (data) {
-            processMessage(data)
-                .then(function(message){
-                    io.emit('message', message);
-                });
+            var message = processMessage(data);
+            io.emit('message', message);
         });
 
         socket.on('image', function (data) {
-            console.log('----sockets' + data.image);
-            processMessage(data)
-                .then(function(message){
-                    io.emit('message', message);
-                });
+            var message = processMessage(data);
+            io.emit('message', message);
+        });
+
+        socket.on('update-rooms', function (data) {
+            io.emit('update-rooms');
         });
     });
 };

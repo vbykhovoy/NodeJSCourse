@@ -21,3 +21,7 @@ public/javascripts/angular.min.js
 logs.log
 
 bin/logs.log
+
+public/javascripts/lobby.js
+
+public/javascripts/room.js

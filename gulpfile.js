@@ -15,6 +15,11 @@ gulp.task('copy', function(){
         .pipe(gulp.dest('public/stylesheets'));
 });
 
+gulp.task('copy-app-dev', function(){
+    gulp.src('public/application/*.js')
+        .pipe(gulp.dest('public/javascripts'));
+});
+
 gulp.task('compress', function() {
     return gulp.src('public/application/*.js')
         .pipe(uglify())
@@ -24,4 +29,7 @@ gulp.task('compress', function() {
 
 
 gulp.task('default', ['copy', 'compress'], function() {
+});
+
+gulp.task('dev', ['copy', 'copy-app-dev'], function() {
 });
