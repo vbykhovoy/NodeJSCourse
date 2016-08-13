@@ -1,4 +1,5 @@
 // config/passport.js
+'use strict';
 
 var LocalStrategy = require('passport-local').Strategy;
 var userRepository = require('../repositories/userRepository');
@@ -34,7 +35,7 @@ module.exports = function(passport) {
             // I am checking to see if the user trying to login already exists
             userRepository.getUserByEmail(email)
                 .catch(function(err){
-                    winston.log('error', err.message)
+                    winston.log('error', err.message);
                     return done(err);
                 })
                 .then(function(user){

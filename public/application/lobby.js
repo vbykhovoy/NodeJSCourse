@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var app = angular.module("lobby", []);
 
@@ -9,7 +9,7 @@ app.controller('lobbyController', ['$scope', 'lobbyService', function($scope, lo
     $scope.currentPage = 0;
     $scope.pageSize = 10;
     $scope.pages=function(){
-        if (!$scope.rooms || $scope.rooms.length == 0) return 1;
+        if (!$scope.rooms || $scope.rooms.length === 0) return 1;
         return Math.ceil($scope.rooms.length/$scope.pageSize);
     };
 
@@ -48,7 +48,7 @@ app.service('lobbyService', ['$http', function ($http) {
             headers: { 'Content-Type': 'application/json' },
             data: {name: data}
         });
-    }
+    };
 }]);
 
 app.filter('startFrom', function() {
@@ -57,5 +57,5 @@ app.filter('startFrom', function() {
         if (!input) return;
 
         return input.slice(start);
-    }
+    };
 });

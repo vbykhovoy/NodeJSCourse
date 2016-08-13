@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var Message = require('../models/message');
 var Promise = require('bluebird');
@@ -48,7 +48,7 @@ module.exports = {
                 }
 
                 resolve(_.orderBy(messages, ['createdDate'], ['asc']));
-            })
+            });
         });
     }
 };

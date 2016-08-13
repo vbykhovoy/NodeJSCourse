@@ -1,4 +1,5 @@
 // routes/routes.js
+'use strict';
 
 var roomRepository = require('../repositories/roomRepository');
 var messageRepository = require('../repositories/messageRepository');
@@ -72,7 +73,7 @@ module.exports = function(app, passport) {
     app.get('/api/messages/:id', isApiLoggedIn, function(req, res) {
         messageRepository.getMessagesByRoomId(req.params.id)
             .then(function(messages){
-                for(i=0; i<messages.length;i++){
+                for(var i=0; i<messages.length;i++){
                     var user = messages[i].user.toObject();
                     delete user.email;
                     delete user.password;

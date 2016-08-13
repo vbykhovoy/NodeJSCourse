@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var messageRepository = require('../repositories/messageRepository');
 var winston = require('winston');
@@ -28,7 +28,7 @@ function processMessage(data){
             return message;
         })
         .catch(function (err) {
-            winston.log('error', err.message)
+            winston.log('error', err.message);
         });
 }
 

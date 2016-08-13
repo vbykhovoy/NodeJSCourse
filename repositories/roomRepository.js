@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var Room = require('../models/room');
 var Promise = require('bluebird');

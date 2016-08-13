@@ -22,7 +22,7 @@ mongoose.connect(config.get('mongoose:connectionString'));
 var db = mongoose.connection;
 
 db.on('error', function (err) {
-  winston.log('db error', err.message)
+  winston.log('db error', err.message);
 });
 
 // view engine setup

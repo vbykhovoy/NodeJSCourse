@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
 
 gulp.task('copy', function(){
      gulp.src(['bower_components/angularjs/angular.min.js',
@@ -29,6 +31,11 @@ gulp.task('compress', function() {
         .pipe(gulp.dest('public/javascripts'));
 });
 
+gulp.task('jshint', function () {
+    return gulp.src(["./**/*.js", '!./node_modules/**', '!./bower_components/**', '!./public/javascripts/**'])
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish));
+});
 
 gulp.task('default', ['copy', 'compress'], function() {
 });
