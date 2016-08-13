@@ -3,8 +3,8 @@ extends layout
 block content
   .block-panel(ng-app='lobby', ng-controller='lobbyController')
     -if(user)
+      a.link(href='/logout', style='margin-left:0px') (Logout)
       h3 Welcome #{user.name}!
-      a.link(href='/logout') (Logout)
     .row
       .col-lg-12
         .input-group
