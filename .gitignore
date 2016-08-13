@@ -27,3 +27,5 @@ public/javascripts/lobby.js
 public/javascripts/room.js
 
 public/javascripts/scrollglue.js
+
+public/javascripts/jquery.validate.min.js

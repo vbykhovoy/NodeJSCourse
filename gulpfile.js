@@ -8,6 +8,7 @@ gulp.task('copy', function(){
                      'bower_components/jquery/dist/jquery.min.map',
                      'bower_components/angularjs/angular.min.js.map',
                      'bower_components/jquery-ui/jquery-ui.min.js',
+                     'bower_components/jquery-validation/dist/jquery.validate.min.js',
                      'bower_components/bootstrap/dist/js/bootstrap.min.js',
                      'bower_components/angular-scroll-glue/src/scrollglue.js'])
         .pipe(gulp.dest('public/javascripts'));
